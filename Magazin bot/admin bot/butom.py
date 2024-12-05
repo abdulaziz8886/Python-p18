@@ -7,7 +7,6 @@ from sqlite3 import connect, Error
 admin = ReplyKeyboardMarkup(
     keyboard=[
         [KeyboardButton(text="Kategorya qo'shish"), KeyboardButton(text="Maxsulot qoshish")],
-        [KeyboardButton(text="Kategorya o'chirish"), KeyboardButton(text="Maxsulot o'chirish")],
         [KeyboardButton(text="User sifatida sinab ko'rish"), KeyboardButton(text="Reklama")],
         [KeyboardButton(text="Odamlar")]
     ], resize_keyboard=True, one_time_keyboard=True

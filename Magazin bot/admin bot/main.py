@@ -8,7 +8,7 @@ from butom import admin, orqaga, menyu, tekshir2
 from sqlite3 import connect, Error
 from aiogram.fsm.context import FSMContext
 from aiogram.utils.keyboard import ReplyKeyboardBuilder
-
+admin_id = [5502720862, 5678926021]
 
 logging.basicConfig(level=logging.INFO)
 bot = Bot(token=token)
@@ -256,7 +256,7 @@ def forUser():
 @dp.message(CommandStart())
 async def starbot(message:Message):
     print(message.from_user.id)
-    if message.from_user.id == 5678926023:
+    if message.from_user.id in admin_id:
         await message.answer(f"Assalomu Alaykum {message.from_user.full_name}\nsizga adminlik huquqi berilgan qo'shimcha funksiyalardan foydalanishingiz mummkin", reply_markup=admin)
         ForAdmin()
     else:
