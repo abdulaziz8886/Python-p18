@@ -1,4 +1,4 @@
-from aiogram import F, Router
+from aiogram import F, Router, Bot
 from aiogram.types import Message, CallbackQuery
 from aiogram.fsm.context import FSMContext
 from aiogram.utils.keyboard import ReplyKeyboardBuilder
@@ -6,7 +6,9 @@ from aiogram.filters import CommandStart
 from state import *
 from CRUD import *
 from butoms import *
+from config import token
 
+bot = Bot(token=token)
 
 admin_router = Router()
 admins = [5678926023]
@@ -280,3 +282,34 @@ async def usBot(message:Message):
     await message.answer("User darajasiga o'tkazildi", reply_markup=Buttom_user_no)
 
 
+
+@admin_router.message(F.text == "Taklif va shikoyatlarni ko'rish 👀")
+async def shikbot(messagee:Message, state:FSMContext):
+    shik = InlineKeyboardBuilder()
+    for i in readShik():
+        shik.button(text=f"{i[1]}",callback_data=f'{i[1]}')
+    shik.button(text="Orqaga 🔙", callback_data="Orqaga 🔙")
+    shik.adjust(1)
+    await messagee.answer("Taklif va shikoyatlardan birini tanlang", reply_markup=shik.as_markup())
+    await state.set_state(shikForm.shikoyat)
+
+@admin_router.callback_query(shikForm.shikoyat)
+async def shik2Bot(cal:CallbackQuery, state:FSMContext):
+    xabar = cal.data
+    for i in readShik():
+        if i[1] == xabar:
+            await state.update_data({"user_id" : i[0]})
+    await cal.message.answer(f"Javobingizni yuboring ✍️", reply_markup=buttom_orqa)
+    await state.set_state(shikForm.finish)
+
+@admin_router.message(shikForm.finish)
+async def shik3Bot(message:Message,state:FSMContext):
+    await message.answer("Xabar yuborildi")
+    xabar = message.text
+    data = await state.get_data()
+    await bot.send_message(chat_id=data.get('user_id'), text=f"{xabar}", reply_markup=Buttom_admin)
+    deleteShik(user_id=data.get('user_id'))
+    await state.clear()
+    
+    
+        

@@ -44,12 +44,26 @@ def createFan():
             create.close()
 createFan()
 
+def createShikoyat():
+    try:
+        create = connect("databaza.bp")
+        cursor = create.cursor()
+        cursor.execute("""Create table IF NOT EXISTS shikoyat(
+                        user_id int not null,
+                       shikoyat text not null);
+                    """)
+        create.commit()
+    except (Exception, Error) as error:
+        print(f"Xato_create_shikoyat\n\n\n",error)
+createShikoyat()
+
+
 
 def createSavol():
     try:
         create = connect("databaza.bp")
         cursor = create.cursor()
-        cursor.execute("""Create table IF NOT EXISTS savol(
+        cursor.execute("""Create table IF NOT EXISTS shikoyat(
                     fan text not null,
                     savol text not null,
                     a text not null,
@@ -106,6 +120,15 @@ def AddFan(name):
             cursor.close()
             create.close()
 
+
+def AddShikoyat(user_id, shik):
+    try:
+        create = connect("databaza.bp")
+        cursor = create.cursor()
+        cursor.execute("""INSERT INTO shikoyat(user_id, shikoyat) values(?,?)""", (user_id, shik))
+        create.commit()
+    except (Exception, Error) as error:
+        print(f"Xato_create_shikoyat\n\n\n",error)
 
 
 
@@ -195,6 +218,18 @@ def readlogin():
             create.close()
 
 
+def readShik():
+    try:
+        create = connect("databaza.bp")
+        cursor = create.cursor()
+        cursor.execute("""Select * from shikoyat""")
+        a = cursor.fetchall()
+        return a
+    except (Exception, Error) as error:
+        print(f"Xato_rad_shikoyat\n\n\n",error)    
+
+
+
 def readFanler():
     try:
         create = connect("databaza.bp")
@@ -269,6 +304,16 @@ def DeleteSavol(name):
         if create:
             cursor.close()
             create.close()
+
+
+def deleteShik(user_id):
+    try:
+        create = connect("databaza.bp")
+        cursor = create.cursor()
+        cursor.execute("""DELETE FROM shikoyat WHERE user_id = ?;""", (user_id,))
+        create.commit()
+    except (Exception, Error) as error:
+        print(f"Xato_delete_shikoyat\n\n\n",error)
 
 
 def DeleteFan(name):

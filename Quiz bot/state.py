@@ -67,6 +67,11 @@ class foydalanuvchi(StatesGroup):
 
 class cntForm(StatesGroup):
     first = State()
+    
+
+class shikForm(StatesGroup):
+    shikoyat = State()
+    finish = State()
 
 
 

@@ -5,7 +5,7 @@ Buttom_admin = ReplyKeyboardMarkup(
         [KeyboardButton(text="O'quvchilar natijalarini ko'rish 📊"), KeyboardButton(text="O'quvchilar ro'yxati 📋")],
         [KeyboardButton(text="Fan qo'shish 🆕"), KeyboardButton(text="Savol qo'shish 💡")],
         [KeyboardButton(text="Fan o'chirish 🗑️"), KeyboardButton(text="Savol o'chirish 🚮")],
-        [KeyboardButton(text="User sifatida sinab ko'rish 🚀")]
+        [KeyboardButton(text="Taklif va shikoyatlarni ko'rish 👀") ,KeyboardButton(text="User sifatida sinab ko'rish 🚀")]
     ], resize_keyboard=True, one_time_keyboard=True
 )
 Buttom_user_no = ReplyKeyboardMarkup(

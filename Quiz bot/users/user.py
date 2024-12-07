@@ -21,7 +21,7 @@ async def startBot(message:Message):
     else:
         user_id = str(message.from_user.id)
         users = readlogin()  # Ro'yxatni bir marta yuklab oling
-
+        await message.answer(f"{message.from_user.id}")
         # Foydalanuvchini ro'yxatda qidirish
         for i in users:
             if user_id == str(i[2]):
@@ -95,7 +95,7 @@ async def parol2bot(message:Message, state:FSMContext):
 
 @user_router.message(F.text == "Kirish ➡️")
 async def KirishBot(message:Message, state:FSMContext):
-    await message.answer("Loginingizni kiriting ✍️")
+    await message.answer("Loginingizni kiriting ✍️", reply_markup=buttom_orqa)
     await state.set_state(kirish_form.login)
 
 @user_router.message(kirish_form.login)
@@ -197,7 +197,7 @@ async def KirishBot(message:Message):
     await message.answer("🙋🏻‍♂️Assalomu Alaykim xurmatli foydalanuvchi ushbu bot ❓ Quiz bot xisoblanib kar bir o'zuvchi uchun shaxsiy 🔐 login, parollarini saqlagan xolda kirish-chiqishni nazorat qiladi va 👨🏻‍💻 adminga har bir o'quvchini ko'rsatayotgan 📈 natijalarini chiqarib boradi! 🚀")
 
 
-@user_router.message(F.text == "👨‍💻 Dasturchi bn boglanish ☎️")
+@user_router.message(F.text == "👨‍💻 Dasturchi bn boglanissh ☎️")
 async def KirishBot(message:Message):
     await message.answer("""👨‍💻 Dasturchi bn boglanissh ☎️
                          
@@ -277,12 +277,10 @@ async def tek2Bot(cal:CallbackQuery, state:FSMContext):
         for i in readusers():
             c.append(i[2])
         if cal.from_user.id in c:
-            await cal.message.answer("bor")
             a = i[3] + savol_soni
             b = i[4] + tj_soni
             updateUser(a=a, b=b, teach=(b / a) * 100, id2=cal.from_user.id)
         else:
-            await cal.message.answer("yoq")
             adduser(name=cal.from_user.full_name, User_name=cal.from_user.full_name,user_id=cal.from_user.id, savol_soni=savol_soni, javob_soni=tj_soni, teach=foiz)
   
     for i in cnt1:
@@ -399,10 +397,8 @@ async def login1Bot(message:Message, state:FSMContext):
 
 @user_router.message(taklifForm.taklif)
 async def shikoyatBot(message:Message, state:FSMContext):
-    for i in admins:
-        await bot.send_message(chat_id=5678926023, text=f"muallif: @{message.from_user.username}\n{message.text}")
-        await message.answer("Taklif yoki shikoyatingizni 24 soat ichida ko'rib chiqiladi ⏳", reply_markup=Buttom_user_yes)
-
+    await message.answer("Taklif yoki shikoyatingizni 24 soat ichida ko'rib chiqiladi ⏳", reply_markup=Buttom_user_yes)
+    AddShikoyat(user_id=message.from_user.id, shik=f"{message.text}")
     await state.clear()
 
 
