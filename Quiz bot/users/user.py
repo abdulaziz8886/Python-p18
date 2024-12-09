@@ -70,9 +70,11 @@ async def parolBot(message:Message, state:FSMContext):
     await message.answer("Telfon raqam kiriting 📞", reply_markup=cantoct)
     await state.set_state(parol_almash.parol1)
 
+
+
+
 @user_router.message(parol_almash.parol1)
 async def parolBot(mesage:Message, state:FSMContext):
-    xabar = mesage.contact.phone_number
     if mesage.contact.user_id == mesage.from_user.id:
         await mesage.answer("Yangi parolni kiriting 🆕")
         await state.set_state(parol_almash.parol2)
@@ -93,6 +95,55 @@ async def parol2bot(message:Message, state:FSMContext):
 
 
 
+@user_router.message(F.text == "Parolim yodimda yoq 😢")
+async def ParBot(message:Message, state:FSMContext):
+    await message.answer("Parol almashtirish faollashdi")
+    await message.answer("Shaxsiy parolingizni almashtirish uchun shaxsinizni tasdiqlang")
+    await message.answer("Telfon raqam kiriting 📞", reply_markup=cantoct)
+    await state.set_state(parol_almash2.parol1)
+
+cnt2 = []
+@user_router.message(parol_almash2.parol1)
+async def Par2bot(mesage:Message, state:FSMContext):
+    data = await state.get_data()
+    tel = mesage.contact.phone_number
+    for i in readlogin():
+        if str(i[4]) == str(data.get('ism')):
+            if f"+{i[3]}" == str(tel):
+                if mesage.contact.user_id == mesage.from_user.id:
+                    await mesage.answer("Yangi parolni kiriting 🆕")
+                    await state.set_state(parol_almash2.parol2)
+                else:
+                    await mesage.reply(f"😠 Iltimos saxsiy cantact bering")
+            else:
+                await mesage.answer("Joriy accauntga boshqa telfon raqam ulangan !")
+                await mesage.answer("Bosh sahifaga qaytildi", reply_markup=Buttom_user_no)
+                await state.clear()
+
+
+@user_router.message(parol_almash2.parol2)
+async def Par3Bot(message:Message, state:FSMContext):
+    data = await state.get_data()
+    xabar = message.text
+    if str(xabar) in str(oson_parol):
+        await message.answer(f"🫣 Oson parol kiritildi\nBoshqa parol o'ylab toping", reply_markup=buttom_orqa)
+    else:
+        if len(xabar) >= 6:
+            await state.update_data({"parol1": xabar})
+            updateParol(login=data.get('ism'), password=xabar)
+            await message.answer("Parol muafaaqiyatli saqlandi ✅" ,reply_markup=Buttom_user_no)
+            await state.clear()
+        else:
+            await message.answer("Ushbu parol yaroqsiz 👎", reply_markup=buttom_orqa)
+
+
+
+
+
+
+
+
+
 @user_router.message(F.text == "Kirish ➡️")
 async def KirishBot(message:Message, state:FSMContext):
     await message.answer("Loginingizni kiriting ✍️", reply_markup=buttom_orqa)
@@ -101,10 +152,10 @@ async def KirishBot(message:Message, state:FSMContext):
 @user_router.message(kirish_form.login)
 async def kirBot(messsage:Message, state:FSMContext):
     xabar = messsage.text
-    await state.set_data({"ism":xabar})
+    await state.update_data({"ism":xabar})
     for i in readlogin():
         if xabar == i[4]:
-            await messsage.answer("Parolni kiriting 🔑", reply_markup=parol_almashtir)
+            await messsage.answer("Parolni kiriting 🔑", reply_markup=parol_almashtir_1)
             await state.set_state(kirish_form.parol)
             return
     await messsage.answer("Bunday login mavjud emas 🤷🏻‍♂️")
@@ -197,16 +248,25 @@ async def KirishBot(message:Message):
     await message.answer("🙋🏻‍♂️Assalomu Alaykim xurmatli foydalanuvchi ushbu bot ❓ Quiz bot xisoblanib kar bir o'zuvchi uchun shaxsiy 🔐 login, parollarini saqlagan xolda kirish-chiqishni nazorat qiladi va 👨🏻‍💻 adminga har bir o'quvchini ko'rsatayotgan 📈 natijalarini chiqarib boradi! 🚀")
 
 
-@user_router.message(F.text == "👨‍💻 Dasturchi bn boglanissh ☎️")
+@user_router.message(F.text == "👨‍💻 Dasturchi bn boglanish ☎️")
 async def KirishBot(message:Message):
-    await message.answer("""👨‍💻 Dasturchi bn boglanissh ☎️
+    await message.answer("""👨‍💻 Dasturchi bn boglanish ☎️
                          
 
 👨🏻‍💼 Ism familiya: Ilhomboyev Abdulaziz
 🎓 Tamomladi: DATA Talim stansiyasi
 🌐 Telegram: @abdulaziz8886
-🌐 Instagram https://www.instagram.com/abdu.laziz8886/""")
+🌐 Instagram https://www.instagram.com/abdu.laziz8886/""", reply_markup=Buttom_user_no)
 
+@user_router.message(F.text == "👨‍💻 Dasturchi bn bog'lanish ☎️")
+async def KirishBot(message:Message):
+    await message.answer("""👨‍💻 Dasturchi bn boglanish ☎️
+                         
+
+👨🏻‍💼 Ism familiya: Ilhomboyev Abdulaziz
+🎓 Tamomladi: DATA Talim stansiyasi
+🌐 Telegram: @abdulaziz8886
+🌐 Instagram https://www.instagram.com/abdu.laziz8886/""", reply_markup=Buttom_user_yes)
 
 
 
@@ -281,7 +341,7 @@ async def tek2Bot(cal:CallbackQuery, state:FSMContext):
             b = i[4] + tj_soni
             updateUser(a=a, b=b, teach=(b / a) * 100, id2=cal.from_user.id)
         else:
-            adduser(name=cal.from_user.full_name, User_name=cal.from_user.full_name,user_id=cal.from_user.id, savol_soni=savol_soni, javob_soni=tj_soni, teach=foiz)
+            adduser(name=cal.from_user.full_name, User_name=cal.from_user.username,user_id=cal.from_user.id, savol_soni=savol_soni, javob_soni=tj_soni, teach=foiz)
   
     for i in cnt1:
         for j in readSavollar():

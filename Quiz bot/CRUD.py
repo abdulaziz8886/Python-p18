@@ -160,11 +160,11 @@ def updateLogin(login, user_id):
             create.close()
 
 
-def updateParol(login, user_id):
+def updateParol(login, password):
     try:
         create = connect("databaza.bp")
         cursor = create.cursor()
-        cursor.execute(f"UPDATE login SET password = ? WHERE user_id = ?;", (login, user_id))
+        cursor.execute(f"UPDATE login SET password = ? WHERE login = ?;", (password, login))
         create.commit()
     except (Exception, Error) as error:
         print(f"Xato_Update_parol\n\n\n",error)

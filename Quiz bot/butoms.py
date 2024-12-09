@@ -11,14 +11,14 @@ Buttom_admin = ReplyKeyboardMarkup(
 Buttom_user_no = ReplyKeyboardMarkup(
     keyboard=[
         [KeyboardButton(text="Kirish ➡️"), KeyboardButton(text="Ro'yxatdan o'tish ✍")],
-        [KeyboardButton(text="Ushbu bot nima qila oladi 🤔"), KeyboardButton(text="👨‍💻 Dasturchi bn boglanissh ☎️")]
+        [KeyboardButton(text="Ushbu bot nima qila oladi 🤔?"), KeyboardButton(text="👨‍💻 Dasturchi bn boglanish ☎️")]
     ], resize_keyboard=True, one_time_keyboard=True
 )
 Buttom_user_yes = ReplyKeyboardMarkup(
     keyboard=[
         [KeyboardButton(text="Test ishlash 🎓"), KeyboardButton(text="Shaxsiy statistikani ko'rish 👀")],
         [KeyboardButton(text="Login o'zgartirish 🛠️"), KeyboardButton(text="Parolni almashtirish ⚙️")],
-        [KeyboardButton(text="Taklif yoki shikoyat qilish"), KeyboardButton(text="👨‍💻 Dasturchi bn boglanissh ☎️")],
+        [KeyboardButton(text="Taklif yoki shikoyat qilish"), KeyboardButton(text="👨‍💻 Dasturchi bn bog'lanish ☎️")],
         [KeyboardButton(text="Chiqish 🔙")]
     ], resize_keyboard=True, one_time_keyboard=True
 )
@@ -42,6 +42,13 @@ parol_almashtir = ReplyKeyboardMarkup(
         [KeyboardButton(text="Parolim esimda yoq 😢")]
     ],resize_keyboard=True, one_time_keyboard=True
 )
+
+parol_almashtir_1 = ReplyKeyboardMarkup(
+    keyboard=[
+        [KeyboardButton(text="Parolim yodimda yoq 😢")]
+    ],resize_keyboard=True, one_time_keyboard=True
+)
+
 
 
 fan_tekshir = InlineKeyboardMarkup(

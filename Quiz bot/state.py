@@ -20,6 +20,11 @@ class parol_almash(StatesGroup):
     parol1 = State()
     parol2 = State()
 
+class parol_almash2(StatesGroup):
+    parol1 = State()
+    parol2 = State()
+    
+
 
 class taklifForm(StatesGroup):
     taklif = State()

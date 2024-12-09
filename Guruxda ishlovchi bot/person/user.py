@@ -10,8 +10,8 @@ bot = Bot(token=token)
 user_router = Router()
 
 kanal = {
-    "From student to Python Developer" : "https://t.me/learn_python_3_5",
-    "test" : "https://t.me/empty_none_1"
+    "1-kanal" : "https://t.me/learn_python_3_5",
+    "2-kanal" : "https://t.me/empty_none_1"
 }
 
 tugma = InlineKeyboardBuilder()
@@ -35,6 +35,7 @@ async def tekBot(cal:CallbackQuery):
             await cal.message.answer(f"2-kanalga obuna bo'lmadingiz", reply_markup=tugma.as_markup())
         else:
             await cal.message.answer("Obuna bo'ldingiz")
+            await cal.message.answer("Echo botdan foydalanishiningiz mumkin")
 
 
 

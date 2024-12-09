@@ -73,7 +73,7 @@ async def royxatBot(message:Message, state:FSMContext):
     for i in a:
         user.button(text=i, callback_data=i)
     user.button(text="Orqaga 🔙", callback_data="Orqaga 🔙")
-    user.adjust()
+    user.adjust(1)
     await message.answer("Foydalanuvchi tanlang", reply_markup=user.as_markup())
     await state.set_state(foydalanuvchi.user)
 
@@ -96,7 +96,7 @@ async def royxatBot(message:Message, state:FSMContext):
     for i in b:
         user1.button(text=i, callback_data=i)
     user1.button(text="Orqaga 🔙", callback_data="Orqaga 🔙")
-    user1.adjust()
+    user1.adjust(1)
     await message.answer("Foydalanuvchi tanlang", reply_markup=user1.as_markup())
     await state.set_state(foydalanuvchi.finish)
 
